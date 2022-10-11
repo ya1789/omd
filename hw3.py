@@ -1,40 +1,34 @@
-class CountVectorizer(object):
-
+class CountVectorizer():
     def __init__(self):
-        self.feature_names = dict()
+        self.names_numerated = dict()
 
     def fit_transform(self, corpus):
-        # разбиваем предложения на слова
-        words = []
-        for sentence in corpus:
-            words.append(sentence.lower().split())
-
-        # составляем словарь уникальных пронумерованных слов
-        for sentence in words:
-            for word in sentence:
-                if self.feature_names.get(word) is None:
-                    self.feature_names.update({word: len(self.feature_names)})
-
-        # векторизируем предложение
+        words_list = []
         out = []
-        for sentence in words:
-            array = [0] * len(self.feature_names)
-            for word in sentence:
-                array[self.feature_names[word]] += 1
-            out.append(array)
+        for line in corpus:
+            words_list.append((line.lower()).split())
+        for line in words_list:
+            for word in line:
+                if self.names_numerated.get(word) is None:
+                    self.names_numerated.update({word: len(self.names_numerated)})
+        for line in words_list:
+            vector = [0] * len(self.names_numerated)
+            for word in line:
+                vector[self.names_numerated[word]] += 1
+            out.append(vector)
 
         return out
 
     def get_feature_names(self):
-        return list(self.feature_names.keys())
+        return list(self.names_numerated.keys())
 
 
-corpus = [
- 'Crock Pot Pasta Never boil pasta again',
- 'Pasta Pomodoro Fresh ingredients Parmesan to taste'
-]
-
-vectorizer = CountVectorizer()
-count_matrix = vectorizer.fit_transform(corpus)
-print(vectorizer.get_feature_names())
-print(count_matrix)
+if __name__ == "__main__":
+    corpus = [
+        'Crock Pot Pasta Never boil pasta again',
+        'Pasta Pomodoro Fresh ingredients Parmesan to taste'
+    ]
+    vectorizer = CountVectorizer()
+    count_matrix = vectorizer.fit_transform(corpus)
+    print(vectorizer.get_feature_names())
+    print(count_matrix)
