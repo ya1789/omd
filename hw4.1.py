@@ -33,8 +33,6 @@ class Advert(ColorizeMixin):
                 self.__dict__[key + '_'] = self.__dict__.pop(key)
         if self.price < 0:
             raise ValueError('must be >= 0')
-        else:
-            self.price = self.price
         if 'location' in self.__dict__:
             self.location = Location(self.location)
 
