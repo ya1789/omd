@@ -15,7 +15,6 @@ class Location(ColorizeMixin):
     def __init__(self, mapping):
         """Конструктор принимает все атрибуты словаря"""
         self.__dict__.update(mapping)
-        #for key, value in mapping.items():
         for key in self.__dict__.keys():
             if type(self.__dict__[key]) == dict:
                 self.__dict__[key] = Location(self.__dict__[key])
@@ -29,8 +28,6 @@ class Advert(ColorizeMixin):
         self.repr_color_code = 32
         self.price = 0
         self.__dict__.update(mapping)
-        #dict_of_keys = dict(self.__dict__.keys())
-        #print(list_of_keys)
         for key in list(self.__dict__):
             if keyword.iskeyword(key):
                 self.__dict__[key + '_'] = self.__dict__.pop(key)
